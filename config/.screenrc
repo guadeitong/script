@@ -1,0 +1,9 @@
+defscrollbak 500
+hardstatus alwayslastline
+hardstatus string "%{.kB}%-w%{..M}%n %t%{-}%+w %=%{..B} %H(%l) %{..B} %Y/%m/%d %c:%s "
+autodetach on
+shelltitle "$ |bash"
+shell -bash
+
+logfile ${PWD}/screen-%S-%n.log
+deflog on
