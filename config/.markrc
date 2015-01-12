@@ -123,21 +123,22 @@ function marks
     done
 }
 
-## Set auto bash completion for command jump or umark
-#function _completemarks
-#{
-    #local cword=${COMP_WORDS[COMP_CWORD]}
-    #local mark_list=$(marks | awk -F '->' '{print $1}' | sed 's/ *$//g')
+# Set auto bash completion for command jump or umark
 
-    ## Only do complete on first argument
-    #if [ $COMP_CWORD -eq 1 ]; then
-        #COMPREPLY=($(compgen -W "${mark_list[@]}" -- "$cword"))
-    #else
-        #COMPREPLY=()
-    #fi
+function _completemarks
+{
+   local cword=${COMP_WORDS[COMP_CWORD]}
+   local mark_list=$(marks | awk -F '->' '{print $1}' | sed 's/ *$//g')
 
-    #return 0
-#}
+   # Only do complete on first argument
+   if [ $COMP_CWORD -eq 1 ]; then
+      #COMPREPLY=($(compgen -W "${mark_list[@]}" -- "$cword"))
+   else
+      #COMPREPLY=()
+   fi
+
+   return 0
+}
 
 # Create aliases for convenience
 
