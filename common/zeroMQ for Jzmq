@@ -1,0 +1,24 @@
+$ yum install libtool autoconf automake  uuid e2fsprogs git l
+$ yum install java-1.7.0-openjdk.x86_64 java-1.7.0-openjdk-devel.x86_64
+
+$ wget http://download.zeromq.org/zeromq-4.0.5.tar.gz
+$ tar -zxvf  zeromq-4.0.5.tar.gz
+$ cd zeromq
+$ ./configure --with-pgm
+$ make
+$ make install
+$ ldconfig
+Now libzmq.so should reside in /usr/local/lib
+
+
+$ git clone https://github.com/zeromq/jzmq.git
+$ cd jzmq
+$ ./autogen.sh
+$ ./configure
+$ make
+$ make install
+$ echo /usr/local/lib >>/etc/ld.so.conf.d/local.conf
+$ ldconfig
+
+$ echo CLASSPATH=/usr/local/share/java/zmq.jar:. >> /etc/environment
+$ echo export LD_LIBRARY_PATH=/usr/local/lib > /etc/profile.d/ldlibrarypath.sh

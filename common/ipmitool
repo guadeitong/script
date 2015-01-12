@@ -1,0 +1,12 @@
+yum install ipmitool -y
+lsmod|grep ipml
+modprobe ipmi_devintf
+modprobe ipmi_msghandler
+modprobe ipmi_si
+modprobe ipmi_watchdog
+modprobe ipmi_poweroff
+
+mknod /dev/ipmi0 c `cat /proc/devices | grep ipmidev |cut -d " " -f 1` 0 OR mknod  /dev/ipmi0 c 250 0
+lsmod|grep "ipmi"
+
+ipmitool -I open sensor list

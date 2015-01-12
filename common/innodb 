@@ -1,0 +1,91 @@
+'Innodb_buffer_pool_pages_data' X 100 / 'Innodb_buffer_pool_pages_total'
+当结果 > 95% 则增加 innodb_buffer_pool_size， 建议使用 ram total 75%
+当结果 < 95% 则减少 innodb_buffer_pool_size， 
+建议 'Innodb_buffer_pool_pages_data' X 'Innodb_page_size' X 1.05 / (1024*1024*1024)
+
+exec4ref
+
+sudo yum  install python-devel  
+python 2.6/python 2.7 install pip
+https://pypi.python.org/packages/
+wget https://pypi.python.org/packages/2.6/s/setuptools/setuptools-0.6c11-py2.6.egg --no-check-certificate
+wget https://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg --no-check-certificate
+sh  setuptools-0.6c11-py2.6.egg
+sh  setuptools-0.6c11-py2.7.egg
+wget https://bootstrap.pypa.io/get-pip.py --no-check-certificate
+python get-pip.py
+
+
+JAVA_OPTS="$JAVA_OPTS  -server -Xms2048m -Xmx2048m -XX:PermSize=128m -XX:MaxPermSize=256m"
+
+JAVA_OPTS="$JAVA_OPTS -server -Xms2048M -Xmx2048M -Xmn400M -XX:PermSize=128M -XX:MaxPermSize=260M -XX:SurvivorRatio=8 -XX:MaxTenuringThreshold=5 -XX:GCTimeRatio=19 -XX:+DisableExplicitGC -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:+CMSPermGenSweepingEnabled -XX:+UseCMSCompactAtFullCollection -XX:CMSFullGCsBeforeCompaction=0 -XX:+CMSClassUnloadingEnabled -XX:+CMSParallelRemarkEnabled -XX:CMSInitiatingOccupancyFraction=70 -XX:SoftRefLRUPolicyMSPerMB=0"
+
+
+GRANT ALL PRIVILEGES ON lzll_gm_app_ptg.* TO lzsqlcommon@localhost IDENTIFIED BY 'w09cim32srpcvq';
+GRANT ALL PRIVILEGES ON lzll_gm_app_ptg.* TO lzsqlcommon@'10.%' IDENTIFIED BY 'w09cim32srpcvq';  
+GRANT ALL PRIVILEGES ON lzll_gm_app_ptg.* TO lzsqlcommon@'192.168.%' IDENTIFIED BY 'w09cim32srpcvq';
+GRANT ALL PRIVILEGES ON lzll_gm_app_ptg.* TO lzsqlcommon@'125.71.203.241' IDENTIFIED BY 'w09cim32srpcvq';  
+GRANT ALL PRIVILEGES ON lzll_gm_app_ptg.* TO lzsqlcommon@'114.112.69.125' IDENTIFIED BY 'w09cim32srpcvq';
+GRANT ALL PRIVILEGES ON lzll_gm_app_ptg.* TO lzsqlcommon@'119.4.240.191' IDENTIFIED BY 'w09cim32srpcvq';
+GRANT ALL PRIVILEGES ON lzll_gm_app_ptg.* TO lzsqlcommon@'125.70.0.195' IDENTIFIED BY 'w09cim32srpcvq';  
+flush privileges;
+
+GRANT ALL PRIVILEGES ON honor_log_mixed_seacs_1001.* TO honorsql@localhost IDENTIFIED BY 'cN!kQ7B8@wV3kC';
+GRANT ALL PRIVILEGES ON honor_log_mixed_seacs_1001.* TO honorsql@'10.0.%' IDENTIFIED BY 'cN!kQ7B8@wV3kC';  
+GRANT ALL PRIVILEGES ON honor_log_mixed_seacs_1001.* TO honorsql@'192.168.%' IDENTIFIED BY 'cN!kQ7B8@wV3kC';
+GRANT ALL PRIVILEGES ON honor_log_mixed_seacs_1001.* TO honorsql@'125.71.203.241' IDENTIFIED BY 'cN!kQ7B8@wV3kC';  
+GRANT ALL PRIVILEGES ON honor_log_mixed_seacs_1001.* TO honorsql@'114.112.69.125' IDENTIFIED BY 'cN!kQ7B8@wV3kC';
+GRANT ALL PRIVILEGES ON honor_log_mixed_seacs_1001.* TO honorsql@'119.4.240.191' IDENTIFIED BY 'cN!kQ7B8@wV3kC';
+GRANT ALL PRIVILEGES ON honor_log_mixed_seacs_1001.* TO honorsql@'125.70.0.195' IDENTIFIED BY 'cN!kQ7B8@wV3kC';  
+flush privileges;
+
+
+vm.overcommit_memory = 1    
+sysctl vm.overcommit_memory=1
+ 
+ 117.79.150.190
+
+GRANT ALL PRIVILEGES ON lzll_log_app_1055.* TO lzsqlcommon@117.79.150.190 IDENTIFIED BY 'w09cim32srpcvq';
+GRANT ALL PRIVILEGES ON lzll_log_app_1056.* TO lzsqlcommon@117.79.150.190 IDENTIFIED BY 'w09cim32srpcvq';  
+GRANT ALL PRIVILEGES ON lzll_log_app_1058.* TO lzsqlcommon@117.79.150.190 IDENTIFIED BY 'w09cim32srpcvq';
+GRANT ALL PRIVILEGES ON lzll_log_app_1066.* TO lzsqlcommon@117.79.150.190 IDENTIFIED BY 'w09cim32srpcvq';  
+GRANT ALL PRIVILEGES ON lzll_log_app_1067.* TO lzsqlcommon@117.79.150.190 IDENTIFIED BY 'w09cim32srpcvq';
+GRANT ALL PRIVILEGES ON lzll_log_app_1068.* TO lzsqlcommon@117.79.150.190 IDENTIFIED BY 'w09cim32srpcvq';
+GRANT ALL PRIVILEGES ON lzll_log_app_1069.* TO lzsqlcommon@117.79.150.190 IDENTIFIED BY 'w09cim32srpcvq';  
+GRANT ALL PRIVILEGES ON lzll_log_app_1070.* TO lzsqlcommon@117.79.150.190 IDENTIFIED BY 'w09cim32srpcvq';
+GRANT ALL PRIVILEGES ON lzll_log_app_1071.* TO lzsqlcommon@117.79.150.190 IDENTIFIED BY 'w09cim32srpcvq';  
+GRANT ALL PRIVILEGES ON lzll_log_app_1088.* TO lzsqlcommon@117.79.150.190 IDENTIFIED BY 'w09cim32srpcvq';
+GRANT ALL PRIVILEGES ON lzll_log_app_1091.* TO lzsqlcommon@117.79.150.190 IDENTIFIED BY 'w09cim32srpcvq';  
+GRANT ALL PRIVILEGES ON lzll_log_app_1065.* TO lzsqlcommon@117.79.150.190 IDENTIFIED BY 'w09cim32srpcvq';
+GRANT ALL PRIVILEGES ON lzll_log_yy_1009.* TO lzsqlcommon@117.79.150.190 IDENTIFIED BY 'w09cim32srpcvq';
+ 
+
+date_str=`date +%Y%m%d`
+cd /data2/backup
+mysqldump -h localhost -u oschina --password=xxxx -R -E -e \
+  --max_allowed_packet=1048576 --net_buffer_length=16384 oscdb\
+   | gzip > /data2/backup/oschina_$date_str.sql.gz
+
+  #/bin/bash
+mysqldump --user=DB_USER --password='DB_PASSWORD' --databases DB_NAME | gzip > /path/to/backup/DB_NAME-`date +%Y%m%d%H%M`.sql.gz
+find /path/to/backup -name "*.gz" -mtime +60 -exec /bin/rm {} 
+
+kr GM
+seaen GM
+usen GM
+jp GM
+
+
+JAVA_OPTS="-server -Xms2048m -Xmx2048m -XX:MaxPermSize=256m -XX:+PrintClassHistogram -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintHeapAtGC -Xloggc:gc.log"
+JAVA_OPTS="$JAVA_OPTS  -server -Xms2048m -Xmx2048m -XX:PermSize=128m -XX:MaxPermSize=256m"
+JAVA_OPTS="$JAVA_OPTS  -server -Xms2048m -Xmx2048m -XX:PermSize=128m -XX:MaxPermSize=256m -XX:+PrintClassHistogram -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintHeapAtGC -Xloggc:gc.log"
+
+
+192.168.7.5 namenode1 zw-104-10-15-5
+192.168.7.6 namenode2 zw-104-10-15-6
+192.168.7.7 secondnamenode zw-104-10-15-7
+#192.168.7.14 datanode14 zw-104-10-15-14
+192.168.7.15 datanode15 zw-104-10-15-15
+192.168.7.16 datanode16 zw-104-10-15-16
+#192.168.7.17 datanode17 zw-104-10-15-17
+192.168.7.17 datanode17

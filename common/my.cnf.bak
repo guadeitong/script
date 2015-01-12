@@ -1,0 +1,44 @@
+# The following options will be passed to all MySQL clients
+[client]
+port		= 3306
+socket		= /tmp/mysqld.sock
+
+# The MySQL server
+[mysqld]
+log-bin=mysql-bin
+server-id=2
+relay-log=mysqld-relay-bin
+user=mysql
+default_storage_engine=INNODB
+socket=/tmp/mysqld.sock
+max_connections=200
+read_buffer_size=1M
+sort_buffer_size=1M
+# Set key_buffer to 5 - 50% of your RAM depending on how much
+# you use MyISAM tables, but keep key_buffer_size + InnoDB
+# buffer pool size < 80% of your RAM
+key_buffer_size=100M
+
+innodb_flush_log_at_trx_commit=1
+innodb_lock_wait_timeout=51
+sync_binlog=1
+innodb_data_file_path=ibdata1:100M:autoextend:max:500M
+# Set buffer pool size to 50-80% of your computer's memory
+innodb_buffer_pool_size=2G
+# 用来存储数据目录信息＆其它内部数据结构的内存池的大小
+innodb_additional_mem_pool_size=10M
+# Set the log file size to about 25% of the buffer pool size
+innodb_log_file_size=50M
+[mysqldump]
+quick
+max_allowed_packet = 16M
+
+
+[myisamchk]
+key_buffer_size = 20M
+sort_buffer_size = 20M
+read_buffer = 2M
+write_buffer = 2M
+
+[mysqlhotcopy]
+interactive-timeout

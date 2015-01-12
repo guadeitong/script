@@ -1,0 +1,3 @@
+herosql:V9qR6@aY6r
+
+JAVA_OPTS="$JAVA_OPTS -server -Xms2048M -Xmx2048M -Xmn400M -XX:PermSize=128M -XX:MaxPermSize=260M -XX:SurvivorRatio=8 -XX:MaxTenuringThreshold=5 -XX:GCTimeRatio=19 -XX:+DisableExplicitGC -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:+CMSPermGenSweepingEnabled -XX:+UseCMSCompactAtFullCollection -XX:CMSFullGCsBeforeCompaction=0 -XX:+CMSClassUnloadingEnabled -XX:+CMSParallelRemarkEnabled -XX:CMSInitiatingOccupancyFraction=70 -XX:SoftRefLRUPolicyMSPerMB=0"

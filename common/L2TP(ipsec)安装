@@ -1,0 +1,122 @@
+yum remove openswan
+
+yum install make gcc gmp-devel bison flex
+
+#安装openswan(ipsec)
+tar -zxvf openswan-2.6.42.tar.gz
+cd openswan-2.6.42
+make programs install
+
+#编辑ipsce.conf
+echo >> ./ipsec.conf << EOF
+version 2.0
+
+config setup
+    nat_traversal=yes
+    virtual_private=%v4:10.0.0.0/8,%v4:192.168.0.0/16,%v4:172.16.0.0/12
+    oe=off
+    protostack=netkey
+conn L2TP-PSK-NAT
+    rightsubnet=vhost:%priv
+    also=L2TP-PSK-noNAT
+conn L2TP-PSK-noNAT
+    authby=secret
+    pfs=no
+    auto=add
+    keyingtries=3
+    rekey=no
+    ikelifetime=8h
+    keylife=1h
+    type=transport
+    left=122.248.254.128 //your ip
+    leftprotoport=17/1701
+    right=%any
+    rightprotoport=17/%any
+    EOF
+
+#设置预共享密钥 (PSK)
+vim /etc/ipsec.secrets
+SERVER-IP %any: PSK "SharedKey"  //SERVER-IP:服务器的IP地址,SharedKey:你自己设置的PSK
+
+#安装rp-l2tp(用到里面的l2tp-control) 和 xl2tpd
+yum install libpcap-devel ppp
+wget http://downloads.sourceforge.net/project/rp-l2tp/rp-l2tp/0.4/rp-l2tp-0.4.tar.gz
+tar zxvf rp-l2tp-0.4.tar.gz
+cd rp-l2tp-0.4
+./configure && make
+make install
+cp handlers/l2tp-control /usr/local/sbin/
+mkdir /var/run/xl2tpd/
+ln -s /usr/local/sbin/l2tp-control /var/run/xl2tpd/l2tp-control
+tar -zxvf xl2tpd-1.3.0.tar.gz
+cd xl2tpd
+make install
+
+#配置xl2tpd.conf
+mkdir /etc/xl2tpd
+vim /etc/xl2tpd/xl2tpd.conf
+
+[lns default]
+ip range = 192.168.1.128-192.168.1.254
+local ip = 192.168.1.99
+require chap = yes
+refuse pap = yes
+require authentication = yes
+name = LinuxVPNserver
+ppp debug = yes
+pppoptfile = /etc/ppp/options.xl2tpd
+length bit = yes
+
+#配置ppp
+vim /etc/ppp/options.xl2tpd
+require-mschap-v2
+ms-dns 8.8.8.8
+ms-dns 8.8.4.4
+asyncmap 0
+auth
+crtscts
+lock
+hide-password
+modem
+debug
+name l2tpd
+proxyarp
+lcp-echo-interval 30
+lcp-echo-failure 4
+mtu 1400
+noccp
+connect-delay 5000
+
+#最后添加用户的帐号密码
+vim /etc/ppp/chap-secrets
+chenlin         *   1234abcd                *
+
+#iptables (nat)
+首先，为L2TP和ipsec打开端口
+iptables -I INPUT -p tcp -m multiport --dport 1701,4500,500,4399,64399 -j ACCEPT
+iptables -I INPUT -p udp -m multiport --dport 1701,4500,500,4399,64399 -j ACCEPT
+然后给客户端设置NAT伪装
+iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+最后还要开启Linux的IP转发功能
+vim /etc/sysctl.conf
+net.ipv4.ip_forward = 1
+net.ipv4.conf.default.rp_filter = 0
+net.ipv4.tcp_syncookies = 0
+添加以下条目
+net.ipv4.conf.all.send_redirects = 0
+net.ipv4.conf.default.send_redirects = 0
+net.ipv4.conf.all.accept_redirects = 0
+net.ipv4.conf.default.accept_redirects = 0
+net.core.xfrm_larval_drop = 1
+运行sysctl -p让配置生效。
+
+for each in /proc/sys/net/ipv4/conf/*                                                                                             
+do                                                                                                                                         
+echo 0 > $each/accept_redirects                                                                                                            
+echo 0 > $each/send_redirects                                                                                                              
+done 
+
+
+service iptables save
+service iptables restart
+service ipsec restart
